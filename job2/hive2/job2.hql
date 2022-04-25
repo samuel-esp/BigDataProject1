@@ -17,8 +17,8 @@ LOAD DATA LOCAL INPATH '/home/simoc/Documents/big_data/archive/Reviews.csv' over
 --SELECT * from reviews
 
 CREATE TABLE favorites AS
-SELECT UserId, ProductId, Score FROM reviews
-GROUP BY ProductId, UserId, Score;
+SELECT UserId, ProductId, Score FROM reviews;
+--GROUP BY ProductId, UserId, Score;
 
 SELECT UserId, ProductId, Score
 FROM (
