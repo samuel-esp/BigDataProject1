@@ -4,7 +4,7 @@
 import argparse
 from pyspark.sql import SparkSession
 import re
-from operator import add
+import time
 
 regex = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
 
@@ -31,7 +31,7 @@ def lists_intersect(l1, l2):
 
 
 # read the input file and obtain an RDD with a record for each line
-rdd = spark.sparkContext.textFile("/Users/samuel/Desktop/Reviews.csv").cache()
+rdd = spark.sparkContext.textFile("file:///home/simoc/Documents/big_data/Reviews.csv").cache()
 
 # remove csv header
 removedHeaderRDD = rdd.filter(f=lambda word: not word.startswith("Id") and not word.endswith("Text"))
@@ -52,4 +52,10 @@ resultRDD = cartesianRDD.map(f=lambda x: (x[0][0], x[1][0], x[0][1]))
 
 resultCleanedRDD = resultRDD.filter(lambda x: hash(x[0]) > hash(x[1]))
 
-resultCleanedRDD.saveAsTextFile(output_filepath)
+start_time = time.time()
+resultCleanedRDD.collect()
+end_time = time.time()
+print("Total execution time: {} seconds".format(end_time - start_time))
+print("ok")
+
+resultCleanedRDD.saveAsTextFile("file:///home/simoc/Documents/big_data/spark3output")

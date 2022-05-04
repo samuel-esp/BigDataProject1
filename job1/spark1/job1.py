@@ -6,6 +6,7 @@ from pyspark.sql import SparkSession
 import re
 from datetime import datetime
 from collections import Counter
+import time
 
 regex = ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"
 
@@ -25,7 +26,7 @@ spark = SparkSession \
     .getOrCreate()
 
 # read the input file and obtain an RDD with a record for each line
-rdd = spark.sparkContext.textFile("/Users/samuel/Desktop/Reviews.csv").cache()
+rdd = spark.sparkContext.textFile("file:///home/simoc/Documents/big_data/Reviews.csv").cache()
 
 # remove csv header
 removedHeaderRDD = rdd.filter(f=lambda word: not word.startswith("Id") and not word.endswith("Text"))
@@ -40,5 +41,11 @@ years2WordMostCommonRDD = years2WordRDD.map(f=lambda item: (item[0], Counter(ite
 
 years2WordMostCommonRDDTopTen = years2WordMostCommonRDD.map(f=lambda item: (item[0], item[1][:10]))
 
+start_time = time.time()
+years2WordMostCommonRDDTopTen.collect()
+end_time = time.time()
+print("Total execution time: {} seconds".format(end_time - start_time))
+print("ok")
+
 # write all <year, list of (word, occurrence)> pairs in file
-years2WordMostCommonRDDTopTen.saveAsTextFile(output_filepath)
+years2WordMostCommonRDDTopTen.saveAsTextFile("file:///home/simoc/Documents/big_data/spark1output")
