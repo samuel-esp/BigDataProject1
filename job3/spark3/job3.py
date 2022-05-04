@@ -51,3 +51,5 @@ cartesianRDD = user2ProductsList.cartesian(user2ProductsList).filter(lambda x: x
 resultRDD = cartesianRDD.map(f=lambda x: (x[0][0], x[1][0], x[0][1]))
 
 resultCleanedRDD = resultRDD.filter(lambda x: hash(x[0]) > hash(x[1]))
+
+resultCleanedRDD.saveAsTextFile(output_filepath)
