@@ -10,14 +10,17 @@ Id int,
 ProductId string,
 UserId string,
 ProfileName string,
+HelpfullnessNumerator int,
+HelpfullnessDenominator int,
 Score int,
 Time int,
+Summary string,
 Text string)
 COMMENT 'Reviews Table'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ',';
 
-LOAD DATA LOCAL INPATH '/home/simoc/Documents/big_data/archive/reviewstest.csv' overwrite INTO TABLE reviews;
+LOAD DATA LOCAL INPATH '/home/simoc/Documents/big_data/Reviews.csv' overwrite INTO TABLE reviews;
 
 CREATE TABLE couples AS
 SELECT l.UserId as LeftUser, l.ProductId, r.UserId as RightUser, l.Score as LeftScore, r.Score as RightScore
@@ -52,4 +55,4 @@ DROP TABLE couples;
 drop table couples_greater;
 drop table similar_couples;
 drop table similar_couples_greater;
-drop table result;
+--drop table result;
