@@ -3,6 +3,7 @@
 a cura di Simone Chilosi e Samuel Esposito.
 
 Specifiche dei job:
+
 **Job 1**: Un job che sia in grado di generare, per ciascun anno, le dieci parole che sono state più usate nelle
 recensioni (campo text) in ordine di frequenza, indicando, per ogni parola, il numero di occorrenze
 della parola nell’anno.
